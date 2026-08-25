@@ -1,10 +1,10 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
+            <x-input-label for="name" :value="__('Nombre')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
@@ -18,7 +18,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Contraseña')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -30,13 +30,34 @@
 
         <!-- Confirm Password -->
         <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
 
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
                             type="password"
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Phone (opcional) -->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('Teléfono (opcional)')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" autocomplete="tel" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+
+        <!-- Professional URL (opcional) -->
+        <div class="mt-4">
+            <x-input-label for="professional_url" :value="__('Enlace a red profesional (LinkedIn, GitHub, opcional)')" />
+            <x-text-input id="professional_url" class="block mt-1 w-full" type="url" name="professional_url" :value="old('professional_url')" placeholder="https://" />
+            <x-input-error :messages="$errors->get('professional_url')" class="mt-2" />
+        </div>
+
+        <!-- Foto de perfil (obligatoria) -->
+        <div class="mt-4">
+            <x-input-label for="photo" :value="__('Foto de perfil')" />
+            <input id="photo" class="block mt-1 w-full text-sm text-gray-600" type="file" name="photo" accept="image/*" required />
+            <x-input-error :messages="$errors->get('photo')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
