@@ -60,4 +60,8 @@ class UserPolicy
     {
         return false;
     }
+    public function toggleAdmin(User $authenticated, User $user): bool
+    {
+        return $authenticated->is_admin && $authenticated->id !== $user->id;
+    }
 }
