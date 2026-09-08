@@ -15,7 +15,8 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/alumnos', [UserController::class, 'index'])->name('alumnos.index');
     Route::get('/alumnos/{user}', [UserController::class, 'show'])->name('alumnos.show');
-
+    Route::post('/alumnos/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('alumnos.toggleAdmin');
+   
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
