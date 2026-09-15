@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -28,5 +29,13 @@ class UserController extends Controller
         $this->authorize('view', $user);
 
         return view('users.show', compact('user'));
+    }
+    public function toggleAdmin(User $user): RedirectResponse
+    {
+        $this->authorize('toggleAdmin', $user);
+
+        $user->update(['is_admin' => ! $user->is_admin]);
+
+        return back()->with('status', 'Rol actualizado correctamente.');
     }
 }

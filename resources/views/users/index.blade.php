@@ -34,7 +34,17 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ $user->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-500">{{ $user->email }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">{{ $user->phone ?? '—' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-500">
+                                            @if ($user->phone)
+                                                @php
+                                                    $clean = preg_replace('/[^0-9]/', '', $user->phone);
+                                                    $countryCode = config('services.whatsapp.country_code');
+                                                @endphp
+                                                <a href="https://wa.me/{{ $countryCode }}{{ $clean }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">{{ $user->phone }}</a>
+                                            @else
+                                                —
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <a href="{{ route('alumnos.show', $user) }}" class="text-indigo-600 hover:text-indigo-900">Ver ficha</a>
                                         </td>

@@ -24,7 +24,19 @@
                     <dl class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Teléfono</dt>
-                            <dd class="text-gray-900">{{ $user->phone ?? '—' }}</dd>
+                            <dd class="text-gray-900">
+    @if ($user->phone)
+        @php
+            $clean = preg_replace('/[^0-9]/', '', $user->phone);
+            $countryCode = config('services.whatsapp.country_code');
+        @endphp
+        <a href="https://wa.me/{{ $countryCode }}{{ $clean }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-900">
+            {{ $user->phone }}
+        </a>
+    @else
+        —
+    @endif
+</dd>
                         </div>
                         <div>
                             <dt class="text-sm font-medium text-gray-500">Red profesional</dt>
