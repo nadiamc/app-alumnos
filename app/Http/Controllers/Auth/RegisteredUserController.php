@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -28,17 +29,8 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+     public function store(RegisterRequest $request): RedirectResponse
     {
-          $request->validate([
-         'name' => ['required', 'string', 'max:255'],
-         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-         'phone' => ['nullable', 'string', 'max:20'],
-         'professional_url' => ['nullable', 'url', 'max:255'],
-         'photo' => ['required', 'image', 'max:2048'],
-         ]);
-
         $photoPath = $request->file('photo')->store('photos', 'public');
 
          $user = User::create([
